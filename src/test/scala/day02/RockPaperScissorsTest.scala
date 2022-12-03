@@ -1,18 +1,19 @@
 package com.owengilfellon
 package day02
 
+import com.owengilfellon.helpers.BaseSpec
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 
-class RockPaperScissorsTest  extends AnyFreeSpec {
+class RockPaperScissorsTest  extends AnyFreeSpec with BaseSpec {
 
-  val testInput = """A Y
+  override val testInput = """A Y
                     |B X
-                    |C Z""".stripMargin.split("\n").toSeq
+                    |C Z"""
 
   "parseStrategyOne" - {
 
-    val states = testInput.map(RockPaperScissors.parseStrategyOne)
+    val states = inputSeq.map(RockPaperScissors.parseStrategyOne)
 
     "must return correct states" in {
       states.size mustBe 3
@@ -37,7 +38,7 @@ class RockPaperScissorsTest  extends AnyFreeSpec {
 
   "parseStrategyTwo" - {
 
-    val states = testInput.map(RockPaperScissors.parseStrategyTwo)
+    val states = inputSeq.map(RockPaperScissors.parseStrategyTwo)
 
     "must return correct states" in {
       states.size mustBe 3

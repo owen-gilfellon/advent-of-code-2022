@@ -1,12 +1,13 @@
 package com.owengilfellon
 package day01
 
+import com.owengilfellon.helpers.BaseSpec
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers.convertToAnyMustWrapper
 
-class CalorieCounterTest extends AnyFreeSpec {
+class CalorieCounterTest extends AnyFreeSpec with BaseSpec {
 
-  val testInput: Seq[String] =
+  val testInput =
     """1000
       |2000
       |3000
@@ -20,11 +21,11 @@ class CalorieCounterTest extends AnyFreeSpec {
       |8000
       |9000
       |
-      |10000""".stripMargin.split("\n").toSeq
+      |10000"""
 
   "stringsToOptInt" - {
 
-    val opts = CalorieCounter.stringsToOptInt(testInput)
+    val opts = CalorieCounter.stringsToOptInt(inputSeq)
 
     "must parse all lines" in {
       opts.size mustBe 14
@@ -43,19 +44,19 @@ class CalorieCounterTest extends AnyFreeSpec {
     }
 
     "must work with head empty line" in {
-      val input:Seq[String] = testInput ++: Seq("")
+      val input:Seq[String] = inputSeq ++: Seq("")
       CalorieCounter.stringsToOptInt(input).size mustBe 15
     }
 
     "must work with trailing empty line" in {
-      val input:Seq[String] = testInput :++ Seq("")
+      val input:Seq[String] = inputSeq :++ Seq("")
       CalorieCounter.stringsToOptInt(input).size mustBe 15
     }
   }
 
   "groupNumbers" - {
 
-    val opts = CalorieCounter.stringsToOptInt(testInput)
+    val opts = CalorieCounter.stringsToOptInt(inputSeq)
     val grouped = CalorieCounter.groupNumbers(opts)
 
     "must group numbers" in {
@@ -73,14 +74,14 @@ class CalorieCounterTest extends AnyFreeSpec {
     }
 
     "must work with head empty line" in {
-      val input:Seq[String] = testInput ++: Seq("")
+      val input:Seq[String] = inputSeq ++: Seq("")
       val opts = CalorieCounter.stringsToOptInt(input)
       val grouped = CalorieCounter.groupNumbers(opts)
       grouped.size mustBe 5
     }
 
     "must work with trailing empty line" in {
-      val input:Seq[String] = testInput :++ Seq("")
+      val input:Seq[String] = inputSeq :++ Seq("")
       val opts = CalorieCounter.stringsToOptInt(input)
       val grouped = CalorieCounter.groupNumbers(opts)
       grouped.size mustBe 5
@@ -88,7 +89,7 @@ class CalorieCounterTest extends AnyFreeSpec {
   }
 
   "getCounts" - {
-    val opts = CalorieCounter.stringsToOptInt(testInput)
+    val opts = CalorieCounter.stringsToOptInt(inputSeq)
     val grouped = CalorieCounter.groupNumbers(opts)
     val counts = CalorieCounter.getCounts(grouped)
 
