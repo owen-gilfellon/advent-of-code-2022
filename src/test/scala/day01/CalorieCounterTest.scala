@@ -102,4 +102,5 @@ class CalorieCounterTest extends AnyFreeSpec with BaseSpec {
       counts(4) mustBe 10000
     }
   }
+
 }
