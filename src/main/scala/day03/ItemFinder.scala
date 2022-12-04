@@ -9,6 +9,7 @@ object ItemFinder extends FileInput {
 
   def findBadge(members: Seq[String]): Char = {
 
+    // recursively reduce the set of possible common items
     @tailrec
     def find(member: String, members: Seq[String]): Seq[Char] = {
       if(members.isEmpty)

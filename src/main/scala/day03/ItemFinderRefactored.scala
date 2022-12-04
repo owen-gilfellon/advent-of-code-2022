@@ -5,53 +5,48 @@ import helpers.FileInput
 
 import scala.annotation.tailrec
 
-object ItemFinder extends FileInput {
+object ItemFinderRefactored extends FileInput {
 
-  def findBadge(members: Seq[String]): Char = {
+  def find(groupSize:Int)(compartments: Seq[String]): BigInt = {
 
-    @tailrec
-    def find(member: String, members: Seq[String]): Seq[Char] = {
-      if(members.isEmpty)
-        member else
-      find(members.head.filter(member.contains(_)), members.tail)
+    def findCommonInAll(compartments: Seq[String]): Char = {
+
+      // recursively reduce the set of possible common items
+      @tailrec
+      def find(item: String, items: Seq[String]): Seq[Char] = {
+        if(items.isEmpty)
+          item
+        else
+          find(items.head.filter(item.contains(_)), items.tail)
+      }
+
+      find(compartments.head, compartments.tail).headOption match {
+        case Some(item) => item
+        case _ => throw new IllegalArgumentException("No common item in input")
+      }
     }
 
-    find(members.head, members.tail).headOption match {
-      case Some(badge) => badge
-      case _ => throw new IllegalArgumentException("No badge in input")
-    }
-  }
-
-  def find(items: String): Char = {
-    val compartments: (String, String) = items.splitAt(items.size / 2)
-    assert(compartments._1.length == compartments._2.length)
-    compartments._1.find(compartments._2.contains(_)) match {
-      case Some(commonItem) => commonItem
-      case _ => throw new IllegalArgumentException("No item in input")
-    }
+    compartments.grouped(groupSize).map(findCommonInAll).map(prioritise).sum
   }
 
   private val priorities: Seq[(Char, Int)] =
     ('a' to 'z').zip(1 to 26) :++ ('A' to 'Z').zip(27 to 52)
 
-  def priority(char: Char): Int = {
+  def prioritise(char: Char): Int = {
     priorities.find(_._1 == char) match {
       case Some(priority) => priority._2
       case _ => throw new IllegalArgumentException("Item has no priority")
     }
   }
 
-  def sumPriorities(compartments: Seq[String]): BigInt = {
-    compartments.map(find).map(priority).map(BigInt.int2bigInt).sum
-  }
-
-  def sumBadgePriorities(compartments: Seq[String]): BigInt = {
-    compartments.grouped(3).map(findBadge).map(priority).map(BigInt.int2bigInt).sum
+  def split(string: String): Seq[String] = {
+    val s = string.splitAt(string.length / 2)
+    Seq(s._1, s._2)
   }
 
   def main(args: Array[String]): Unit = {
-    println(sumPriorities(getLines("day03.txt")))
-    println(sumBadgePriorities(getLines("day03.txt")))
-  }
 
+    println(find(2)(getLines("day03.txt").flatMap(split)))
+    println(find(3)(getLines("day03.txt")))
+  }
 }
