@@ -36,27 +36,27 @@ class Day6Test extends AnyFreeSpec  {
 
     "startingPacket with length 14 must provide correct value for" - {
 
-      val startingPacket_4char = Day6.startingPacket(14)(_)
+      val startingPacket_14char = Day6.startingPacket(14)(_)
 
       "example 1" in {
         val input1 = "mjqjpqmgbljsphdztnvjfqwrcgsmlb"
-        startingPacket_4char(input1) mustBe 19
+        startingPacket_14char(input1) mustBe 19
       }
       "example 2" in {
         val input2 = "bvwbjplbgvbhsrlpgdmjqwftvncz"
-        startingPacket_4char(input2) mustBe 23
+        startingPacket_14char(input2) mustBe 23
       }
       "example 3" in {
         val input3 = "nppdvjthqldpwncqszvftbrmjlhg"
-        startingPacket_4char(input3) mustBe 23
+        startingPacket_14char(input3) mustBe 23
       }
       "example 4" in {
         val input4 = "nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg"
-        startingPacket_4char(input4) mustBe 29
+        startingPacket_14char(input4) mustBe 29
       }
       "example 5" in {
         val input5 = "zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw"
-        startingPacket_4char(input5) mustBe 26
+        startingPacket_14char(input5) mustBe 26
       }
     }
   }

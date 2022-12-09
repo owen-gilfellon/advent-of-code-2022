@@ -45,7 +45,7 @@ class StackerTest extends AnyFreeSpec with BaseSpec {
       updated(1) mustBe "CM"
       updated(2) mustBe "P"
 
-      val updated2 = Stacker.applyMove(updated, moves(1))
+      val updated2 = Stacker.applyMove(updated, moves(1), a => a.reverse)
       updated2.head mustBe ""
       updated2(1) mustBe "CM"
       updated2(2) mustBe "ZNDP"
