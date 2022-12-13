@@ -17,6 +17,14 @@ object Day8 extends FileInput {
    largestFromEither(x, table(y)) || largestFromEither(y, transpose(table)(x))
   }
 
+  def largestFromAnyEdge(table: Seq[Seq[Int]]): Seq[Seq[Boolean]] = {
+    table.indices.map(y => {
+      table(y).indices.map(x => {
+        largestFromAny(x, y, table)
+      })
+    })
+  }
+
   def scenicScoreToRight(index: Int, seq: Seq[Int]): Int = {
     if(index == seq.size - 1) 0 else
     (index + 1 until seq.size).find(i => seq(i) >= seq(index)).map(i => i - index).getOrElse(seq.size - index - 1)
@@ -43,21 +51,12 @@ object Day8 extends FileInput {
     })
   }
 
-  def largestFromAnyEdge(table: Seq[Seq[Int]]): Seq[Seq[Boolean]] = {
-    table.indices.map(y => {
-      table(y).indices.map(x => {
-        largestFromAny(x, y, table)
-      })
-    })
-  }
-
   def transpose[A](table: Seq[Seq[A]]): Seq[Seq[A]] =
     (0 to table.head.size).map(i => table.flatMap(_.lift(i)))
 
-
   def main(args: Array[String]): Unit = {
     val table = getLines("day08.txt").map(_.toCharArray.map(_.toString.toInt).toSeq)
-    println(largestFromAnyEdge(table).flatten.count(_ == true))
-    println(scenicScores(table).flatten.max)
+    println(s"Part 1: ${largestFromAnyEdge(table).flatten.count(_ == true)}")
+    println(s"Part 2: ${scenicScores(table).flatten.max}")
   }
 }

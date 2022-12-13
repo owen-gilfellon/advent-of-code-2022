@@ -73,12 +73,6 @@ object Day7 extends FileInput {
     val requiredSpace = 30000000L
     val unusedSpace = totalSpace - answer2
 
-    println(s"$unusedSpace / $totalSpace")
-
-    println(answer3.map(a => (a, a.size + unusedSpace)).filter(a => a._2 >= requiredSpace).minBy(_._1.size)._1.size)
-
-
-
-
+    println(s"Part 2: ${answer3.map(a => (a, a.size + unusedSpace)).filter(a => a._2 >= requiredSpace).minBy(_._1.size)._1.size}")
   }
 }

@@ -21,51 +21,72 @@ class Day8Test extends AnyFreeSpec with BaseSpec {
       transposed(1) mustBe Seq(0, 5, 5, 3, 5)
     }
 
-    "largestFromLeft" in {
-      val line1 = inputSeq.head.map(_.toString).map(_.toInt)
-      val line1VisibleFromLeft = line1.indices.map(i => Day8.largestFromLeft(i, line1))
-      line1VisibleFromLeft mustBe Seq(true, false, false, true, false)
+    "largestFromLeft should calculate correctly" - {
+      "for line 1" in {
+        val line1 = inputSeq.head.map(_.toString).map(_.toInt)
+        val line1VisibleFromLeft = line1.indices.map(i => Day8.largestFromLeft(i, line1))
+        line1VisibleFromLeft mustBe Seq(true, false, false, true, false)
+      }
 
-      val line2 = inputSeq(1).map(_.toString).map(_.toInt)
-      val line2VisibleFromLeft = line2.indices.map(i => Day8.largestFromLeft(i, line2))
-      line2VisibleFromLeft mustBe Seq(true, true, false, false, false)
+      "for line 2" in {
+        val line2 = inputSeq(1).map(_.toString).map(_.toInt)
+        val line2VisibleFromLeft = line2.indices.map(i => Day8.largestFromLeft(i, line2))
+        line2VisibleFromLeft mustBe Seq(true, true, false, false, false)
+      }
     }
 
-    "largestFromEither" in {
-      val line1 = inputSeq.head.map(_.toString).map(_.toInt)
-      val line1VisibleFromLeft = line1.indices.map(i => Day8.largestFromEither(i, line1))
-      line1VisibleFromLeft mustBe Seq(true, false, false, true, true)
+    "largestFromEither should calculate correctly" - {
+      "for line 1" in {
+        val line1 = inputSeq.head.map(_.toString).map(_.toInt)
+        val line1VisibleFromLeft = line1.indices.map(i => Day8.largestFromEither(i, line1))
+        line1VisibleFromLeft mustBe Seq(true, false, false, true, true)
+      }
 
-      val line2 = inputSeq(1).map(_.toString).map(_.toInt)
-      val line2VisibleFromLeft = line2.indices.map(i => Day8.largestFromEither(i, line2))
-      line2VisibleFromLeft mustBe Seq(true, true, true, false, true)
+      "for line 2" in {
+        val line2 = inputSeq(1).map(_.toString).map(_.toInt)
+        val line2VisibleFromLeft = line2.indices.map(i => Day8.largestFromEither(i, line2))
+        line2VisibleFromLeft mustBe Seq(true, true, true, false, true)
+      }
     }
 
-    "largestFromAny" in {
+    "largestFromAny should calculate visibility correctly"- {
+
       val table = inputSeq.map(_.map(_.toString).map(_.toInt))
       val visibility = Day8.largestFromAnyEdge(table)
-      visibility.head mustBe Seq(true, true, true, true, true)
-      visibility(1) mustBe Seq(true, true, true, false, true)
+      "for line 1" in {
+        visibility.head mustBe Seq(true, true, true, true, true)
+      }
+      "for line 2" in {
+        visibility(1) mustBe Seq(true, true, true, false, true)
+      }
     }
 
 
-    "scenic score  from left" in {
+    "scenic score from left" - {
       val table = inputSeq.map(_.map(_.toString).map(_.toInt))
       val visibility = table.head.indices.map(i => Day8.scenicScoreToLeft(i, table.head))
       val visibility2 = table(1).indices.map(i => Day8.scenicScoreToLeft(i, table(1)))
-      visibility mustBe Seq(0, 1, 2, 3, 1)
-      visibility2 mustBe Seq(0, 1, 1, 1, 2)
+      "for line 1" in {
+        visibility mustBe Seq(0, 1, 2, 3, 1)
+      }
+      "for line 2" in {
+        visibility2 mustBe Seq(0, 1, 1, 1, 2)
+      }
     }
 
-    "scenic score  from right" in {
+    "scenic score from right" - {
       val table = inputSeq.map(_.map(_.toString).map(_.toInt))
       val visibility = table.head.indices.map(i => Day8.scenicScoreToRight(i, table.head))
       val visibility2 = table(1).indices.map(i => Day8.scenicScoreToRight(i, table(1)))
-      visibility mustBe Seq(2, 1, 1, 1, 0)
-      visibility2 mustBe Seq(1, 1, 2, 1, 0)
+      "for line 1" in {
+        visibility mustBe Seq(2, 1, 1, 1, 0)
+      }
+      "for line 2" in {
+        visibility2 mustBe Seq(1, 1, 2, 1, 0)
+      }
     }
 
-    "Scores" in {
+    "scenicScores must be calculated correctly" in {
       val table = inputSeq.map(_.map(_.toString).map(_.toInt))
       val visibility = Day8.scenicScores(table)
       visibility.flatten.max mustBe 8
